@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome!</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .box {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome!<br></h1>
+    <div class="container">
+        {% if access_level >= 4 %}
+        <div class="box">
+            <form action="/admincontrols" method="POST">
+                <button type="submit">Admin Controls</button>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if access_level >= 3 %}
+        <div class="box">
+            <form action="/finances" method="POST">
+                <button type="submit">Finances</button>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if access_level >= 2 %}
+        <div class="box">
+            <form action="/scheduling" method="POST">
+                <button type="submit">Scheduling</button>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if access_level >= 1 %}
+        <div class="box">
+            <form action="/timecards" method="POST">
+                <button type="submit">Time Cards</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
