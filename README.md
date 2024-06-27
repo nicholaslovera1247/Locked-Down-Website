@@ -2,3 +2,4 @@ In our final lab, we are taking the idea of lab 1, a page with different users a
 The UI for this program is basic, as I am not the best at CSS and know little to no JS (so it is not present). Each password is salted, encoded and the saved into the database in that style, so the password can not be found easily. No script was used, so I did not see any point of using any SRI and our database is parameterized to avoid the risk of injection attacks. 
 
 I also looked up how to hide sensitive data from the URL and used this GeeksForGeeks article on the flask's session method: https://www.geeksforgeeks.org/how-to-use-flask-session-in-python-flask/#
+One more note: There are several usernames and password combos already in the database, I wanted to keep them in there to show the functionality of there not being able to re-use usernames.
