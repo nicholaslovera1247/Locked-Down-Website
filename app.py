@@ -34,10 +34,11 @@ def createpassword():
     if request.method == "POST":
         choice = request.form.get('option')
         if choice == 'strong':
-            password = strong_pw()
-            if authenticate_password(password):
-                add_user(username, password)
-                return redirect(url_for('home'))
+            strongpassword = strong_pw()
+            if authenticate_password(strongpassword):
+                add_user(username, strongpassword)
+                session["strongpassword"] = strongpassword
+                return redirect(url_for('showstrongpass'))
         elif choice == 'custom':
             password = request.form.get('custom_password')
             if authenticate_password(password):
@@ -45,10 +46,26 @@ def createpassword():
                 return redirect(url_for('home'))
             else:
                 flash("Password not strong enough","danger")
+        elif choice == 'home':
+            return redirect(url_for('home'))
     return render_template('createpassword.html',
                            title="New Password",
                            heading="New Password",
                            username=username,
+                           )
+
+
+
+@app.route("/showstrongpass", methods=['GET', 'POST'])
+def showstrongpass():
+    choice = request.form.get('option')
+    if choice == 'home':
+        return redirect(url_for('home'))
+    strongpassword = session['strongpassword']
+    flash(f"Password is {strongpassword}")
+    return render_template('strongpasswordpage.html',
+                           title="Strong Password",
+                           strongpassword=strongpassword,
                            )
 
 
@@ -90,6 +107,10 @@ def login_success():
 
 @app.route("/admincontrols", methods=['GET', 'POST'])
 def admincontrols():
+    if request.method == "POST":
+        choice = request.form.get('option')
+        if choice == 'back':
+            return redirect(url_for('home'))
     return render_template('admincontrols.html',
                            title="Admin Controls",
                            heading="Admin Controls"
@@ -97,12 +118,20 @@ def admincontrols():
 
 @app.route("/finances", methods=['GET', 'POST'])
 def finances():
+    if request.method == "POST":
+        choice = request.form.get('option')
+        if choice == 'back':
+            return redirect(url_for('home'))
     return render_template('finances.html',
                            title="Finances",
                            heading="Finances"
                            )
 @app.route("/scheduling", methods=['GET', 'POST'])
 def scheduling():
+    if request.method == "POST":
+        choice = request.form.get('option')
+        if choice == 'back':
+            return redirect(url_for('home'))
     return render_template('scheduling.html',
                            title="Scheduling",
                            heading="Scheduling"
@@ -110,6 +139,10 @@ def scheduling():
 
 @app.route("/timecards", methods=['GET', 'POST'])
 def timecards():
+    if request.method == "POST":
+        choice = request.form.get('option')
+        if choice == 'back':
+            return redirect(url_for('home'))
     return render_template('timecards.html',
                            title="Time Cards",
                            heading="Time Cards"

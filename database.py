@@ -12,6 +12,21 @@ from passwordsettings import hash_pw
 
 DATABASE = 'user.db'
 
+def delete(username):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        c = conn.cursor()
+        c.executemany("DELETE FROM user WHERE username = ?", [(username,),])
+        conn.commit()
+    except sqlite3.DatabaseError:
+        print("Error. Could not retrieve data.")
+    finally:
+        if c is not None:
+            c.close()
+        if conn is not None:
+            conn.close()
+
+
 def create_db():
     try:
         conn = sqlite3.connect(DATABASE)
